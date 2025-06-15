@@ -3,71 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wallet</title>
+  <title>Wallet - CBANK</title>
   <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="container">
-    <h2>Connect Your TON Wallet</h2>
-    <input type="text" id="walletInput" placeholder="Enter TON Wallet Address" />
-    <button onclick="connectWallet()">Connect</button>
+  <style>
+    .wallet-section {
+      padding: 2rem;
+      color: #fff;
+      text-align: center;
+    }
 
-    <div id="walletActions" style="display: none;">
-      <h3>Wallet Connected</h3>
-      <button onclick="buyCBANK()">Buy CBANK</button>
-      <button onclick="buyTON()">Buy TON</button>
+    .wallet-section h2 {
+      margin-bottom: 1rem;
+      font-size: 24px;
+    }
+
+    .wallet-box {
+      background-color: #222;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .wallet-box p {
+      margin: 0.5rem 0;
+      font-size: 18px;
+    }
+
+    .connect-btn, .buy-btn {
+      display: inline-block;
+      margin: 0.5rem;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .connect-btn {
+      background-color: #00ffcc;
+      color: #000;
+    }
+
+    .buy-btn {
+      background-color: #ff00aa;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #111;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+
+    .nav-item {
+      color: #ccc;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body style="background-color: #000; font-family: sans-serif">
+  <div class="wallet-section">
+    <h2>💰 Your Wallet</h2>
+
+    <div class="wallet-box">
+      <p><strong>CBANK:</strong> <span id="cbankBalance">0</span></p>
+      <p><strong>TON:</strong> <span id="tonBalance">0</span></p>
+    </div>
+
+    <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+
+    <div>
+      <a href="https://app.blum.io/memepad/token/EQARYZBkWrdBMLFROALHaUHVm1ng7CnY2DH-9YirsL-nIzu2" class="buy-btn" target="_blank">Buy CBANK</a>
+      <a href="https://getgems.io/collection/UQB7Qq8821NNJJ5JGp4GbnV66sLWxEDFCtpUUYOaBbW2RpIL" class="buy-btn" target="_blank">Buy TON</a>
     </div>
   </div>
 
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item">
-      <img src="icons/home.svg" alt="Home" />
-      <span>Home</span>
+      <img src="icons/home.svg" alt="Home"/>
+      <div>Home</div>
     </a>
     <a href="spin.html" class="nav-item">
-      <img src="icons/spin.svg" alt="Spin" />
-      <span>Spin</span>
+      <img src="icons/spin.svg" alt="Spin"/>
+      <div>Spin</div>
     </a>
     <a href="earn.html" class="nav-item">
-      <img src="icons/earn.svg" alt="Earn" />
-      <span>Earn</span>
+      <img src="icons/earn.svg" alt="Earn"/>
+      <div>Earn</div>
     </a>
     <a href="wallet.html" class="nav-item active">
-      <img src="icons/wallet.svg" alt="Wallet" />
-      <span>Wallet</span>
+      <img src="icons/wallet.svg" alt="Wallet"/>
+      <div>Wallet</div>
     </a>
     <a href="invite.html" class="nav-item">
-      <img src="icons/referral.svg" alt="Referral" />
-      <span>Referral</span>
+      <img src="icons/referral.svg" alt="Referral"/>
+      <div>Referral</div>
     </a>
   </nav>
 
   <script>
     function connectWallet() {
-      const walletInput = document.getElementById("walletInput").value;
-      if (walletInput.trim() !== "") {
-        localStorage.setItem("tonWallet", walletInput);
-        document.getElementById("walletActions").style.display = "block";
-      } else {
-        alert("Please enter a valid TON wallet address.");
-      }
+      alert("Wallet connection is simulated in this demo.\nTON Address:\nUQB7Qq8821NNJJ5JGp4GbnV66sLWxEDFCtpUUYOaBbW2RpIL");
+      // TODO: Replace with real TON connect integration
     }
-
-    function buyCBANK() {
-      window.open("https://tonviewer.com/EQARYZBkWrdBMLFROALHaUHVm1ng7CnY2DH-9YirsL-nIzu2", "_blank");
-    }
-
-    function buyTON() {
-      window.open("https://t.me/wallet", "_blank"); // TON satın alma linki dəyişdirilə bilər
-    }
-
-    // Əgər artıq wallet daxil olunubsa, səhifə yenilənəndə göstər
-    window.onload = () => {
-      if (localStorage.getItem("tonWallet")) {
-        document.getElementById("walletActions").style.display = "block";
-        document.getElementById("walletInput").value = localStorage.getItem("tonWallet");
-      }
-    };
   </script>
 </body>
 </html>
