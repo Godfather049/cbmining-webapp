@@ -2,85 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Mining</title>
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CBANK Mining</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <div class="container">
-    <h2>⛏️ Mining Section</h2>
-    <p>You can mine every 8 hours and earn 150 CBANK tokens.</p>
+    <h2>CBANK Mining</h2>
+    <div id="mining-timer" class="countdown">08:00:00</div>
+    <button id="claim-btn" class="main-button" disabled>⛏ Claim 100 CBANK</button>
+    <p id="mining-message"></p>
 
-    <div id="balance">💰 Balance: 0 CBANK</div>
-    <button id="mineButton" onclick="startMining()"> Mine Now </button>
-    <div id="countdown"></div>
-    <div id="resultMessage"></div>
-
-    <br/>
-    <a href="../index.html">⬅️ Back to Home</a>
+    <div class="premium-box">
+      <p>💎 Premium mining: claim every 4 hours and earn 150 CBANK!</p>
+      <a href="premium.html" class="join-btn">Upgrade</a>
+    </div>
   </div>
 
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <img src="icons/home.svg" alt="Home" />
+      <span>Home</span>
+    </a>
+    <a href="spin.html" class="nav-item">
+      <img src="icons/spin.svg" alt="Spin" />
+      <span>Spin</span>
+    </a>
+    <a href="earn.html" class="nav-item">
+      <img src="icons/earn.svg" alt="Earn" />
+      <span>Earn</span>
+    </a>
+    <a href="wallet.html" class="nav-item">
+      <img src="icons/wallet.svg" alt="Wallet" />
+      <span>Wallet</span>
+    </a>
+    <a href="invite.html" class="nav-item">
+      <img src="icons/referral.svg" alt="Referral" />
+      <span>Referral</span>
+    </a>
+  </nav>
+
   <script>
-    const miningTime = 8 * 60 * 60; // 8 saat (saniyə ilə)
-    let balance = 0;
+    const timerDisplay = document.getElementById("mining-timer");
+    const claimBtn = document.getElementById("claim-btn");
+    const message = document.getElementById("mining-message");
 
-    function updateBalance(amount) {
-      balance += amount;
-      document.getElementById("balance").innerText = "💰 Balance: " + balance + " CBANK";
-    }
+    let countdown = 8 * 60 * 60; // 8 hours in seconds
 
-    function startMining() {
-      const now = Math.floor(Date.now() / 1000);
-      const nextMineTime = now + miningTime;
+    const interval = setInterval(() => {
+      const hours = Math.floor(countdown / 3600);
+      const minutes = Math.floor((countdown % 3600) / 60);
+      const seconds = countdown % 60;
 
-      localStorage.setItem("nextMineTime", nextMineTime);
+      timerDisplay.textContent = 
+        `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-      startCountdown();
-    }
-
-    function startCountdown() {
-      const button = document.getElementById("mineButton");
-      const countdownEl = document.getElementById("countdown");
-
-      button.disabled = true;
-
-      const timer = setInterval(() => {
-        const now = Math.floor(Date.now() / 1000);
-        const nextMineTime = parseInt(localStorage.getItem("nextMineTime"));
-
-        if (!nextMineTime || now >= nextMineTime) {
-          clearInterval(timer);
-          button.disabled = false;
-          button.innerText = "Mine Now";
-          countdownEl.innerText = "";
-          updateBalance(150);
-          document.getElementById("resultMessage").innerText = "✅ You earned 150 CBANK!";
-          localStorage.removeItem("nextMineTime");
-        } else {
-          const remaining = nextMineTime - now;
-          const hours = Math.floor(remaining / 3600);
-          const minutes = Math.floor((remaining % 3600) / 60);
-          const seconds = remaining % 60;
-
-          button.innerText = "⏳ Mining...";
-          countdownEl.innerText = `Next available in: ${hours}h ${minutes}m ${seconds}s`;
-        }
-      }, 1000);
-    }
-
-    window.onload = () => {
-      const nextMineTime = localStorage.getItem("nextMineTime");
-
-      if (nextMineTime) {
-        const now = Math.floor(Date.now() / 1000);
-        if (now < nextMineTime) {
-          startCountdown();
-        } else {
-          localStorage.removeItem("nextMineTime");
-        }
+      if (countdown === 0) {
+        clearInterval(interval);
+        claimBtn.disabled = false;
+        message.textContent = "✅ Ready to claim!";
+      } else {
+        countdown--;
       }
-    };
-  </script>
+    }, 1000);
 
+    claimBtn.addEventListener("click", () => {
+      claimBtn.disabled = true;
+      message.textContent = "🎉 You earned 100 CBANK!";
+      countdown = 8 * 60 * 60; // Reset timer
+    });
+  </script>
 </body>
 </html>
