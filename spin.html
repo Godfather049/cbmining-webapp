@@ -2,35 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Spin to Win</title>
-  <link rel="stylesheet" href="../style.css" />
-  <script src="../script.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spin & Win CBANK</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .wheel-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .wheel {
+      width: 200px;
+      height: 200px;
+      border: 8px solid #00ffcc;
+      border-radius: 50%;
+      position: relative;
+      margin: 20px;
+      background: conic-gradient(
+        #1abc9c 0deg 60deg,
+        #3498db 60deg 120deg,
+        #9b59b6 120deg 180deg,
+        #f1c40f 180deg 240deg,
+        #e67e22 240deg 300deg,
+        #e74c3c 300deg 360deg
+      );
+      animation: none;
+      transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    .arrow {
+      width: 0; height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 30px solid #fff;
+      position: absolute;
+      top: -40px;
+    }
+    .spin-btn {
+      background: #00ffcc;
+      color: black;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    #spin-result {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-
-  <header>
-    <div class="logo">🎡 Spin to Win</div>
-    <a href="../index.html" class="back-btn">⬅️ Back</a>
-  </header>
-
-  <div class="main-content">
-    <h2>🎰 Spin the Wheel!</h2>
-    <div id="wheel">
-      <div class="segment">CBANK x10</div>
-      <div class="segment">CBANK x5</div>
-      <div class="segment">Try Again</div>
-      <div class="segment">CBANK x2</div>
+  <div class="container">
+    <h2>🎯 Spin & Win CBANK</h2>
+    <div class="wheel-container">
+      <div class="arrow"></div>
+      <div class="wheel" id="wheel"></div>
     </div>
-    <button onclick="spinWheel()">🔄 Spin</button>
-    <p id="result"></p>
+    <button class="spin-btn" id="spinBtn">Spin Now</button>
+    <p id="spin-result"></p>
+
+    <div class="premium-box">
+      <p>🔁 Want more spins? Buy extra spins using CBANK tokens!</p>
+      <a href="buy-cbank.html" class="join-btn">Buy CBANK</a>
+    </div>
   </div>
 
-  <footer>
-    <div class="nav-button" onclick="window.location.href='../index.html'">🏠 Home</div>
-    <div class="nav-button" onclick="window.location.href='leaderboard.html'">🏆 Leaderboard</div>
-    <div class="nav-button active">🎡 Spin</div>
-    <div class="nav-button" onclick="window.open('https://t.me/wallet',  '_blank')"> purse @wallet</div>
-  </footer>
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <img src="icons/home.svg" alt="Home" />
+      <span>Home</span>
+    </a>
+    <a href="spin.html" class="nav-item active">
+      <img src="icons/spin.svg" alt="Spin" />
+      <span>Spin</span>
+    </a>
+    <a href="earn.html" class="nav-item">
+      <img src="icons/earn.svg" alt="Earn" />
+      <span>Earn</span>
+    </a>
+    <a href="wallet.html" class="nav-item">
+      <img src="icons/wallet.svg" alt="Wallet" />
+      <span>Wallet</span>
+    </a>
+    <a href="invite.html" class="nav-item">
+      <img src="icons/referral.svg" alt="Referral" />
+      <span>Referral</span>
+    </a>
+  </nav>
 
+  <script>
+    const spinBtn = document.getElementById("spinBtn");
+    const wheel = document.getElementById("wheel");
+    const resultText = document.getElementById("spin-result");
+
+    const prizes = [ "10 CBANK", "20 CBANK", "50 CBANK", "Try Again", "5 CBANK", "30 CBANK" ];
+
+    spinBtn.addEventListener("click", () => {
+      spinBtn.disabled = true;
+      const deg = Math.floor(3600 + Math.random() * 360);
+      wheel.style.transform = `rotate(${deg}deg)`;
+
+      setTimeout(() => {
+        const index = Math.floor((deg % 360) / 60);
+        resultText.textContent = `🎉 You won: ${prizes[index]}`;
+        spinBtn.disabled = false;
+      }, 4000);
+    });
+  </script>
 </body>
 </html>
