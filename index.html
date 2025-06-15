@@ -3,14 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CB Mining Bot</title>
+  <title>CB Mining</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div class="container">
-    <h1>💎 CB Mining</h1>
-    <p>Welcome! Mine CBANK every 7 hours. Boost speed by buying CBANK.</p>
+    <header>
+      <div class="user-profile">
+        <img src="https://via.placeholder.com/50"  alt="User Profile" />
+        <span>GODFA...</span>
+      </div>
+      <button onclick="window.location.reload()">🔄 Refresh</button>
+    </header>
+
+    <section class="drop-message">
+      <p><strong>Drop is coming!</strong></p>
+      <p>Prepare for the next phase →</p>
+    </section>
+
+    <section class="balance-section">
+      <div class="balance">
+        <strong>Balance:</strong><br/>
+        <span id="balance">0 CBANK</span>
+      </div>
+    </section>
+
+    <section class="countdown-section">
+      <img src="bank-clock.png" alt="Bank Clock" style="max-width: 100%; height: auto;" />
+      <p id="countdown">⏳ Loading...</p>
+    </section>
 
     <div class="button-group">
       <button onclick="window.location.href='mining.html'">⛏️ Mine Now</button>
@@ -22,14 +44,13 @@
       <button onclick="window.location.href='buy-ton.html'">💳 Buy TON</button>
     </div>
 
-    <div class="wallet">
-      <strong>Your Wallet:</strong><br/>
-      <span id="wallet-address">UQB7Qq8821NNJJ5JGp4GbnV66sLWxEDFCtpUUYOaBbW2RpIL</span>
-    </div>
-
-    <div class="channel">
+    <footer>
+      <div class="wallet">
+        <strong>Your Wallet:</strong><br/>
+        <span id="wallet-address">UQB7Qq8821NNJJ5JGp4GbnV66sLWxEDFCtpUUYOaBbW2RpIL</span>
+      </div>
       <a href="https://t.me/cbankmining"  target="_blank">📢 Join Official Channel</a>
-    </div>
+    </footer>
   </div>
 
 </body>
