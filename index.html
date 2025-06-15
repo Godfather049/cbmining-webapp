@@ -8,50 +8,46 @@
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <div class="user-profile">
-        <img src="https://via.placeholder.com/50"  alt="User Profile" />
-        <span>GODFA...</span>
-      </div>
-      <button onclick="window.location.reload()">🔄 Refresh</button>
-    </header>
+  <!-- Üst panel -->
+  <header>
+    <div class="logo">💎 CBANK MINING</div>
+    <a href="https://t.me/cbankmining"  target="_blank" class="channel-link">📢 @cbankmining</a>
+  </header>
 
-    <section class="drop-message">
-      <p><strong>Drop is coming!</strong></p>
-      <p>Prepare for the next phase →</p>
-    </section>
-
-    <section class="balance-section">
-      <div class="balance">
-        <strong>Balance:</strong><br/>
-        <span id="balance">0 CBANK</span>
-      </div>
-    </section>
-
-    <section class="countdown-section">
-      <img src="bank-clock.png" alt="Bank Clock" style="max-width: 100%; height: auto;" />
-      <p id="countdown">⏳ Loading...</p>
-    </section>
-
-    <div class="button-group">
-      <button onclick="window.location.href='mining.html'">⛏️ Mine Now</button>
-      <button onclick="window.location.href='leaderboard.html'">🏆 Leaderboard</button>
-      <button onclick="window.location.href='invite.html'">👥 Invite Friends</button>
-      <button onclick="window.location.href='spin.html'">🎡 Spin to Win</button>
-      <button onclick="window.location.href='premium.html'">💎 Premium Features</button>
-      <button onclick="window.location.href='buy-cbank.html'">💰 Buy CBANK</button>
-      <button onclick="window.location.href='buy-ton.html'">💳 Buy TON</button>
-    </div>
-
-    <footer>
-      <div class="wallet">
-        <strong>Your Wallet:</strong><br/>
-        <span id="wallet-address">UQB7Qq8821NNJJ5JGp4GbnV66sLWxEDFCtpUUYOaBbW2RpIL</span>
-      </div>
-      <a href="https://t.me/cbankmining"  target="_blank">📢 Join Official Channel</a>
-    </footer>
+  <!-- Sol üst künc düymələr -->
+  <div class="top-left-buttons">
+    <button onclick="window.location.href='buy-cbank.html'">💰 Buy CBANK</button>
+    <button onclick="window.open('https://t.me/tonkeeper_com_bot',  '_blank')">💳 Buy TON</button>
   </div>
+
+  <!-- Mərkəzi rəsm -->
+  <div class="main-content">
+    <img src="https://via.placeholder.com/200x200.png?text=CBANK+MINING" alt="Logo" class="main-image" />
+
+    <!-- Earn Bölümü -->
+    <section class="earn-section">
+      <h3>🏆 Earn More Tokens</h3>
+      <p>Join our partners to earn extra tokens!</p>
+
+      <!-- Trump's Empire Bot Reklamı -->
+      <button onclick="window.open('https://t.me/TrumpsEmpireBot?start=friend=1463264622=adjust=1h9jgqbc', '_blank')">
+        🚀 Start Trump's Empire Bot and Earn 10 CB Tokens
+      </button>
+
+      <!-- CBank Kanalı Reklamı -->
+      <button onclick="window.open('https://t.me/cbankmining', '_blank')">
+        📢 Join Official Channel and Earn 20 CB Tokens
+      </button>
+    </section>
+  </div>
+
+  <!-- Alt menyu -->
+  <footer>
+    <div class="nav-button" onclick="alert('Home clicked')">🏠 Home</div>
+    <div class="nav-button" onclick="window.location.href='leaderboard.html'">🏆 Leaderboard</div>
+    <div class="nav-button" onclick="window.location.href='spin.html'">🎡 Spin</div>
+    <div class="nav-button" onclick="window.open('https://t.me/wallet', '_blank')"> purse @wallet</div>
+  </footer>
 
 </body>
 </html>
