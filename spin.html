@@ -7,18 +7,30 @@
   <script src="../script.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h2>🎡 Spin to Win</h2>
+
+  <header>
+    <div class="logo">🎡 Spin to Win</div>
+    <a href="../index.html" class="back-btn">⬅️ Back</a>
+  </header>
+
+  <div class="main-content">
+    <h2>🎰 Spin the Wheel!</h2>
     <div id="wheel">
       <div class="segment">CBANK x10</div>
       <div class="segment">CBANK x5</div>
       <div class="segment">Try Again</div>
       <div class="segment">CBANK x2</div>
     </div>
-    <button onclick="spinWheel()">Spin</button>
+    <button onclick="spinWheel()">🔄 Spin</button>
     <p id="result"></p>
-    <br/>
-    <a href="../index.html">⬅️ Back</a>
   </div>
+
+  <footer>
+    <div class="nav-button" onclick="window.location.href='../index.html'">🏠 Home</div>
+    <div class="nav-button" onclick="window.location.href='leaderboard.html'">🏆 Leaderboard</div>
+    <div class="nav-button active">🎡 Spin</div>
+    <div class="nav-button" onclick="window.open('https://t.me/wallet',  '_blank')"> purse @wallet</div>
+  </footer>
+
 </body>
 </html>
