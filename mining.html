@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mining</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h2>⛏️ Mining Section</h2>
+    <p>You can mine every 8 hours and earn 150 CBANK tokens.</p>
+
+    <div id="balance">💰 Balance: 0 CBANK</div>
+    <button id="mineButton" onclick="startMining()"> Mine Now </button>
+    <div id="countdown"></div>
+    <div id="resultMessage"></div>
+
+    <br/>
+    <a href="../index.html">⬅️ Back to Home</a>
+  </div>
+
+  <script>
+    const miningTime = 8 * 60 * 60; // 8 saat (saniyə ilə)
+    let balance = 0;
+
+    function updateBalance(amount) {
+      balance += amount;
+      document.getElementById("balance").innerText = "💰 Balance: " + balance + " CBANK";
+    }
+
+    function startMining() {
+      const now = Math.floor(Date.now() / 1000);
+      const nextMineTime = now + miningTime;
+
+      localStorage.setItem("nextMineTime", nextMineTime);
+
+      startCountdown();
+    }
+
+    function startCountdown() {
+      const button = document.getElementById("mineButton");
+      const countdownEl = document.getElementById("countdown");
+
+      button.disabled = true;
+
+      const timer = setInterval(() => {
+        const now = Math.floor(Date.now() / 1000);
+        const nextMineTime = parseInt(localStorage.getItem("nextMineTime"));
+
+        if (!nextMineTime || now >= nextMineTime) {
+          clearInterval(timer);
+          button.disabled = false;
+          button.innerText = "Mine Now";
+          countdownEl.innerText = "";
+          updateBalance(150);
+          document.getElementById("resultMessage").innerText = "✅ You earned 150 CBANK!";
+          localStorage.removeItem("nextMineTime");
+        } else {
+          const remaining = nextMineTime - now;
+          const hours = Math.floor(remaining / 3600);
+          const minutes = Math.floor((remaining % 3600) / 60);
+          const seconds = remaining % 60;
+
+          button.innerText = "⏳ Mining...";
+          countdownEl.innerText = `Next available in: ${hours}h ${minutes}m ${seconds}s`;
+        }
+      }, 1000);
+    }
+
+    window.onload = () => {
+      const nextMineTime = localStorage.getItem("nextMineTime");
+
+      if (nextMineTime) {
+        const now = Math.floor(Date.now() / 1000);
+        if (now < nextMineTime) {
+          startCountdown();
+        } else {
+          localStorage.removeItem("nextMineTime");
+        }
+      }
+    };
+  </script>
+
+</body>
+</html>
