@@ -1,50 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CBANK Mining</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- Üst panel -->
-  <header>
-    <div class="logo">💎 CBANK MINING</div>
-    <a href="https://t.me/cbankmining"  target="_blank" class="channel-link">@cbankmining</a>
-  </header>
-
-  <!-- Sol üst künc düymələr -->
-  <div class="top-left-buttons">
-    <button onclick="window.location.href='buy-cbank.html'">💰 Buy CBANK</button>
-    <button onclick="window.location.href='buy-ton.html'">💳 Buy TON</button>
-  </div>
-
-  <!-- Mərkəzi Logo -->
-  <div class="main-content">
-    <img src="cb-logo.png" alt="CB Logo" class="cb-logo" />
-  </div>
-
-  <!-- Mining Butonu -->
-  <section class="action-button">
-    <button onclick="startMining()">⛏️ Start Mining</button>
-    <p id="countdown">⏳ Next available in 8 hours</p>
-  </section>
-
-  <!-- Balans göstəricisi -->
-  <div class="balance-section">
-    <p>💰 Balance: <span id="balance">0</span> CBANK</p>
-  </div>
-
-  <!-- Alt menyu -->
-  <footer>
-    <div class="nav-button active" onclick="window.location.reload()">🏠 Home</div>
-    <div class="nav-button" onclick="window.location.href='leaderboard.html'">🏆 Leaderboard</div>
-    <div class="nav-button" onclick="window.location.href='spin.html'">🎡 Spin</div>
-    <div class="nav-button" onclick="window.location.href='wallet.html'"> purse @wallet</div>
-    <div class="nav-button" onclick="window.location.href='premium.html'">💎 Premium</div>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
+  <div class="container">
+    <div class="logo-circle">
+      <h1 class="logo-text">CB</h1>
+    </div>
+    <button id="start-mining" class="main-button">Start Mining</button>
+    <div id="countdown" class="countdown">8:00:00</div>
+  </div>  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item active">
+      <img src="icons/home.svg" alt="Home" />
+      <span>Home</span>
+    </a>
+    <a href="spin.html" class="nav-item">
+      <img src="icons/spin.svg" alt="Spin" />
+      <span>Spin</span>
+    </a>
+    <a href="earn.html" class="nav-item">
+      <img src="icons/earn.svg" alt="Earn" />
+      <span>Earn</span>
+    </a>
+    <a href="wallet.html" class="nav-item">
+      <img src="icons/wallet.svg" alt="Wallet" />
+      <span>Wallet</span>
+    </a>
+    <a href="invite.html" class="nav-item">
+      <img src="icons/referral.svg" alt="Referral" />
+      <span>Referral</span>
+    </a>
+  </nav>  <script src="script.js"></script></body>
 </html>
