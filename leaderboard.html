@@ -2,31 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Leaderboard</title>
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaderboard - CBANK Mining</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <header>
-    <div class="logo">🏆 Leaderboard</div>
-    <a href="../index.html" class="back-btn">⬅️ Back</a>
-  </header>
-
-  <div class="main-content">
-    <h2>Top Miners</h2>
-    <ul class="leader-list">
-      <li>1. UserA - 1500 CBANK</li>
-      <li>2. UserB - 1200 CBANK</li>
-      <li>3. UserC - 950 CBANK</li>
+  <div class="container">
+    <h2>🏆 Top Miners</h2>
+    <ul class="leaderboard">
+      <li>
+        <span class="rank">1</span>
+        <span class="name">@CryptoKing</span>
+        <span class="score">12,500 CBANK</span>
+      </li>
+      <li>
+        <span class="rank">2</span>
+        <span class="name">@TONQueen</span>
+        <span class="score">10,300 CBANK</span>
+      </li>
+      <li>
+        <span class="rank">3</span>
+        <span class="name">@MinerX</span>
+        <span class="score">9,750 CBANK</span>
+      </li>
+      <li>
+        <span class="rank">4</span>
+        <span class="name">@BoinkMaster</span>
+        <span class="score">8,100 CBANK</span>
+      </li>
+      <li>
+        <span class="rank">5</span>
+        <span class="name">@BlumRocket</span>
+        <span class="score">7,900 CBANK</span>
+      </li>
     </ul>
   </div>
 
-  <footer>
-    <div class="nav-button" onclick="window.location.href='../index.html'">🏠 Home</div>
-    <div class="nav-button active">🏆 Leaderboard</div>
-    <div class="nav-button" onclick="window.location.href='spin.html'">🎡 Spin</div>
-    <div class="nav-button" onclick="window.open('https://t.me/wallet',  '_blank')"> purse @wallet</div>
-  </footer>
-
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <img src="icons/home.svg" alt="Home" />
+      <span>Home</span>
+    </a>
+    <a href="spin.html" class="nav-item">
+      <img src="icons/spin.svg" alt="Spin" />
+      <span>Spin</span>
+    </a>
+    <a href="earn.html" class="nav-item">
+      <img src="icons/earn.svg" alt="Earn" />
+      <span>Earn</span>
+    </a>
+    <a href="wallet.html" class="nav-item">
+      <img src="icons/wallet.svg" alt="Wallet" />
+      <span>Wallet</span>
+    </a>
+    <a href="invite.html" class="nav-item">
+      <img src="icons/referral.svg" alt="Referral" />
+      <span>Referral</span>
+    </a>
+  </nav>
 </body>
 </html>
