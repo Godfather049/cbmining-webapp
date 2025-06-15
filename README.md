@@ -1,22 +1,38 @@
-# CBANK Mining Telegram WebApp Bot
+# CBANK Mining Telegram WebApp
 
-A Telegram WebApp-based mining bot where users can mine CBANK tokens every 8 hours.  
-Users can also earn more tokens by joining channels or inviting friends.
+CBANK Mining, Telegram üzərindən istifadə edilə bilən WebApp formatında hazırlanmış airdrop və oyun botudur.
 
-## Features
+## 🔗 WebApp linki
+Bot WebApp bağlantısı: [https://cbankmining.netlify.app](https://cbankmining.netlify.app)
 
-- ⛏️ Mine 100 CBANK every 8 hours
-- 🎡 Spin to Win rewards
-- 🏆 Leaderboard for top miners
-- 💰 Buy CBANK via BlumCryptoBot
-- 💳 Buy TON via TonKeeper
-- 👛 Wallet connection support
-- 💎 Premium features (CBANK/TON holders only)
-- 🚀 Earn section with referral and channel bonuses
+## 🎮 Əsas xüsusiyyətlər
 
-## Technologies Used
+- 🪙 **Start Mining** — Hər 8 saatdan bir 100 CB qazanın.
+- 🔁 **Premium Mining** — CBANK token sahibləri 4 saatda bir 1500 CB qazanır.
+- 🎰 **Spin Wheel** — Gündəlik pulsuz spin, əlavə spinlər CBANK ilə alınır.
+- 👥 **Referal Sistemi** — Dostlarınızı dəvət edin, CB qazanın.
+- 🧠 **Earn bölməsi** — Kanallara və botlara abunə ol, CB qazan.
+- 👛 **Cüzdan bağlantısı** — TON cüzdanınızı bağlayın, CBANK və TON alın.
+- 🛒 **Buy CBANK** — Blum Memepadda rəsmi CBANK tokeninə yönləndirmə.
 
-- HTML / CSS / JavaScript
-- GitHub for version control
-- Netlify for deployment
-- Telegram WebApp API
+## 🔗 Faydalı linklər
+
+- Botun rəsmi kanalı: [@cbankmining](https://t.me/cbankmining)
+- Blum Memepad CBANK tokeni: [CBANK Trade](https://tonviewer.com/EQARYZBkWrdBMLFROALHaUHVm1ng7CnY2DH-9YirsL-nIzu2)
+- TON cüzdan adresi: `UQB7Qq8821NNJJ5JGp4GbnV66sLWxEDFCtpUUYOaBbW2RpIL`
+
+## 📁 Fayl strukturu
+
+```bash
+├── index.html
+├── style.css
+├── script.js
+├── premium.html
+├── mining.html
+├── spin.html
+├── invite.html
+├── leaderboard.html
+├── buy-cbank.html
+├── buy-ton.html
+├── wallet.html
+├── README.md
