@@ -5,62 +5,118 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Earn CBANK</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding-bottom: 80px;
+    }
+
+    .earn-container {
+      padding: 20px;
+    }
+
+    .task {
+      background-color: #111;
+      margin-bottom: 20px;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .task a {
+      color: #00ffcc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .task button {
+      margin-top: 10px;
+      background-color: #00ffcc;
+      color: #000;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #111;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+
+    .nav-item {
+      color: #ccc;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Earn Free CBANK</h2>
-    <p>Join the channels and bots below to earn 10 CBANK each.</p>
+  <h2 style="padding: 1rem;">💸 Earn CBANK by Subscribing</h2>
+  <div class="earn-container">
 
-    <div class="earn-item">
-      <span>Join BlumCryptoBot</span>
-      <a href="https://t.me/BlumCryptoBot" target="_blank" class="join-btn">Join</a>
+    <div class="task">
+      <p>Subscribe to <a href="https://t.me/blumcrypto" target="_blank">@blumcrypto</a> and earn 10 CBANK</p>
+      <button onclick="claimReward(this)">Claim 10 CBANK</button>
     </div>
 
-    <div class="earn-item">
-      <span>Join BlumCrypto Channel</span>
-      <a href="https://t.me/blumcrypto" target="_blank" class="join-btn">Join</a>
+    <div class="task">
+      <p>Join <a href="https://t.me/cbankmining" target="_blank">@cbankmining</a> and earn 10 CBANK</p>
+      <button onclick="claimReward(this)">Claim 10 CBANK</button>
     </div>
 
-    <div class="earn-item">
-      <span>Join CBANK Mining Channel</span>
-      <a href="https://t.me/cbankmining" target="_blank" class="join-btn">Join</a>
+    <div class="task">
+      <p>Use <a href="https://t.me/boinker_bot/boinkapp?startapp=boink1463264622" target="_blank">@BoinkerBot</a> and earn 10 CBANK</p>
+      <button onclick="claimReward(this)">Claim 10 CBANK</button>
     </div>
 
-    <div class="earn-item">
-      <span>Join Boink Game</span>
-      <a href="https://t.me/boinker_bot/boinkapp?startapp=boink1463264622" target="_blank" class="join-btn">Join</a>
+    <div class="task">
+      <p>Try <a href="https://t.me/BlumCryptoBot" target="_blank">@BlumCryptoBot</a> and earn 10 CBANK</p>
+      <button onclick="claimReward(this)">Claim 10 CBANK</button>
     </div>
 
-    <button class="main-button" onclick="claimRewards()">Claim Rewards</button>
-    <p id="rewardMessage" style="display:none; color:lime; font-weight:bold;">✅ 40 CBANK added to your balance!</p>
   </div>
 
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item">
       <img src="icons/home.svg" alt="Home" />
-      <span>Home</span>
+      <div>Home</div>
     </a>
     <a href="spin.html" class="nav-item">
       <img src="icons/spin.svg" alt="Spin" />
-      <span>Spin</span>
+      <div>Spin</div>
     </a>
     <a href="earn.html" class="nav-item active">
       <img src="icons/earn.svg" alt="Earn" />
-      <span>Earn</span>
+      <div>Earn</div>
     </a>
     <a href="wallet.html" class="nav-item">
       <img src="icons/wallet.svg" alt="Wallet" />
-      <span>Wallet</span>
+      <div>Wallet</div>
     </a>
     <a href="invite.html" class="nav-item">
       <img src="icons/referral.svg" alt="Referral" />
-      <span>Referral</span>
+      <div>Referral</div>
     </a>
   </nav>
 
   <script>
-    function claimRewards() {
-      document.getElementById("rewardMessage").style.display = "block";
+    function claimReward(button) {
+      button.disabled = true;
+      button.innerText = "Reward Claimed!";
     }
   </script>
 </body>
