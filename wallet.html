@@ -2,34 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Connect Wallet</title>
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wallet</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="container">
+    <h2>Connect Your TON Wallet</h2>
+    <input type="text" id="walletInput" placeholder="Enter TON Wallet Address" />
+    <button onclick="connectWallet()">Connect</button>
 
-  <header>
-    <div class="logo">👛 Connect Wallet</div>
-    <a href="../index.html" class="back-btn">⬅️ Back</a>
-  </header>
-
-  <div class="wallet-section">
-    <h2>Your TON Wallet Address</h2>
-    <p id="wallet-address">Not connected yet</p>
-
-    <button onclick="connectTonWallet()">🔗 Connect via BlumCryptoBot</button>
-    <br/><br/>
-    <input type="text" id="manual-wallet" placeholder="Enter your TON address" />
-    <button onclick="saveManualAddress()">💾 Save Manually</button>
+    <div id="walletActions" style="display: none;">
+      <h3>Wallet Connected</h3>
+      <button onclick="buyCBANK()">Buy CBANK</button>
+      <button onclick="buyTON()">Buy TON</button>
+    </div>
   </div>
 
-  <footer>
-    <div class="nav-button" onclick="window.location.href='../index.html'">🏠 Home</div>
-    <div class="nav-button" onclick="window.location.href='../spin.html'">🎡 Spin</div>
-    <div class="nav-button active">🏆 Earn</div>
-    <div class="nav-button" onclick="window.location.href='../wallet.html'"> purse @wallet</div>
-    <div class="nav-button" onclick="window.location.href='../premium.html'">💎 Premium</div>
-  </footer>
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <img src="icons/home.svg" alt="Home" />
+      <span>Home</span>
+    </a>
+    <a href="spin.html" class="nav-item">
+      <img src="icons/spin.svg" alt="Spin" />
+      <span>Spin</span>
+    </a>
+    <a href="earn.html" class="nav-item">
+      <img src="icons/earn.svg" alt="Earn" />
+      <span>Earn</span>
+    </a>
+    <a href="wallet.html" class="nav-item active">
+      <img src="icons/wallet.svg" alt="Wallet" />
+      <span>Wallet</span>
+    </a>
+    <a href="invite.html" class="nav-item">
+      <img src="icons/referral.svg" alt="Referral" />
+      <span>Referral</span>
+    </a>
+  </nav>
 
-  <script src="../script.js"></script>
+  <script>
+    function connectWallet() {
+      const walletInput = document.getElementById("walletInput").value;
+      if (walletInput.trim() !== "") {
+        localStorage.setItem("tonWallet", walletInput);
+        document.getElementById("walletActions").style.display = "block";
+      } else {
+        alert("Please enter a valid TON wallet address.");
+      }
+    }
+
+    function buyCBANK() {
+      window.open("https://tonviewer.com/EQARYZBkWrdBMLFROALHaUHVm1ng7CnY2DH-9YirsL-nIzu2", "_blank");
+    }
+
+    function buyTON() {
+      window.open("https://t.me/wallet", "_blank"); // TON satın alma linki dəyişdirilə bilər
+    }
+
+    // Əgər artıq wallet daxil olunubsa, səhifə yenilənəndə göstər
+    window.onload = () => {
+      if (localStorage.getItem("tonWallet")) {
+        document.getElementById("walletActions").style.display = "block";
+        document.getElementById("walletInput").value = localStorage.getItem("tonWallet");
+      }
+    };
+  </script>
 </body>
 </html>
