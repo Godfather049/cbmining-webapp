@@ -2,54 +2,125 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Referral - CBANK Mining</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Referral - CBANK</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .referral-section {
+      padding: 2rem;
+    }
+
+    .referral-section h2 {
+      margin-bottom: 1rem;
+      font-size: 24px;
+    }
+
+    .referral-link-box {
+      background: #111;
+      padding: 1rem;
+      border-radius: 10px;
+      word-wrap: break-word;
+      margin-bottom: 1rem;
+    }
+
+    .copy-btn {
+      background-color: #00ffcc;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+
+    .invite-count {
+      font-size: 20px;
+      margin-top: 1.5rem;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #111;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+
+    .nav-item {
+      color: #ccc;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .nav-item img {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h2 class="page-title">Invite & Earn</h2>
-    <p>Invite your friends and earn <strong>20 CBANK</strong> for each referral!</p>
-    
-    <div class="referral-box">
-      <input type="text" id="referral-link" readonly value="https://t.me/cbmining_bot?start=YOUR_ID" />
-      <button onclick="copyReferral()">Copy Link</button>
-    </div>
+  <div class="referral-section">
+    <h2>👥 Invite Friends & Earn CBANK</h2>
 
-    <p class="note">Share this link on Telegram, Twitter, or with friends to earn tokens!</p>
+    <div class="referral-link-box" id="refLink">
+      https://t.me/YourBotUsername?start=ref12345
+    </div>
+    <button class="copy-btn" onclick="copyReferral()">Copy Referral Link</button>
+
+    <div class="invite-count">
+      You have invited <span id="refCount">0</span> people.
+    </div>
   </div>
 
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item">
       <img src="icons/home.svg" alt="Home" />
-      <span>Home</span>
+      <div>Home</div>
     </a>
     <a href="spin.html" class="nav-item">
       <img src="icons/spin.svg" alt="Spin" />
-      <span>Spin</span>
+      <div>Spin</div>
     </a>
     <a href="earn.html" class="nav-item">
       <img src="icons/earn.svg" alt="Earn" />
-      <span>Earn</span>
+      <div>Earn</div>
     </a>
     <a href="wallet.html" class="nav-item">
       <img src="icons/wallet.svg" alt="Wallet" />
-      <span>Wallet</span>
+      <div>Wallet</div>
     </a>
     <a href="invite.html" class="nav-item active">
       <img src="icons/referral.svg" alt="Referral" />
-      <span>Referral</span>
+      <div>Referral</div>
     </a>
   </nav>
 
   <script>
     function copyReferral() {
-      const input = document.getElementById("referral-link");
-      input.select();
-      input.setSelectionRange(0, 99999);
+      const linkBox = document.getElementById("refLink");
+      const tempInput = document.createElement("input");
+      tempInput.value = linkBox.innerText;
+      document.body.appendChild(tempInput);
+      tempInput.select();
       document.execCommand("copy");
+      document.body.removeChild(tempInput);
       alert("Referral link copied!");
     }
+
+    // Simulyasiya: İstifadəçinin neçə nəfəri dəvət etdiyini göstər
+    document.getElementById("refCount").innerText = "3"; // bunu dinamik etmək üçün botdan alınacaq
   </script>
 </body>
 </html>
