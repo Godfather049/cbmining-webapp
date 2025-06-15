@@ -2,17 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Invite Friends</title>
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Referral - CBANK Mining</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h2>👥 Invite Friends</h2>
-    <p>Share this link on Telegram:</p>
-    <input type="text" value="https://t.me/cbmining_bot?start=yourID123" readonly style="width:100%; padding:10px; margin-bottom:10px;" />
-    <button onclick="navigator.clipboard.writeText('https://t.me/cbmining_bot?start=yourID123')">Copy Link</button>
-    <br/>
-    <a href="../index.html">⬅️ Back</a>
+    <h2 class="page-title">Invite & Earn</h2>
+    <p>Invite your friends and earn <strong>20 CBANK</strong> for each referral!</p>
+    
+    <div class="referral-box">
+      <input type="text" id="referral-link" readonly value="https://t.me/cbmining_bot?start=YOUR_ID" />
+      <button onclick="copyReferral()">Copy Link</button>
+    </div>
+
+    <p class="note">Share this link on Telegram, Twitter, or with friends to earn tokens!</p>
   </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <img src="icons/home.svg" alt="Home" />
+      <span>Home</span>
+    </a>
+    <a href="spin.html" class="nav-item">
+      <img src="icons/spin.svg" alt="Spin" />
+      <span>Spin</span>
+    </a>
+    <a href="earn.html" class="nav-item">
+      <img src="icons/earn.svg" alt="Earn" />
+      <span>Earn</span>
+    </a>
+    <a href="wallet.html" class="nav-item">
+      <img src="icons/wallet.svg" alt="Wallet" />
+      <span>Wallet</span>
+    </a>
+    <a href="invite.html" class="nav-item active">
+      <img src="icons/referral.svg" alt="Referral" />
+      <span>Referral</span>
+    </a>
+  </nav>
+
+  <script>
+    function copyReferral() {
+      const input = document.getElementById("referral-link");
+      input.select();
+      input.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      alert("Referral link copied!");
+    }
+  </script>
 </body>
 </html>
