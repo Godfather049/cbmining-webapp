@@ -1,120 +1,36 @@
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+/* style.css */
 
-.container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
+body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0e0e2c; color: #ffffff; display: flex; flex-direction: column; min-height: 100vh; position: relative; }
 
-.logo-circle {
-  width: 140px;
-  height: 140px;
-  background: #00f0ff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
-  box-shadow: 0 0 20px #00f0ff;
-}
+.container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
 
-.logo-text {
-  font-size: 48px;
-  font-weight: bold;
-  color: #000;
-}
+.logo-circle { width: 120px; height: 120px; background: radial-gradient(circle, #0fffc1, #0e0e2c); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 0 15px #00ffc8; }
 
-.main-button {
-  background-color: #ff0099;
-  color: white;
-  font-size: 20px;
-  border: none;
-  border-radius: 10px;
-  padding: 15px 30px;
-  box-shadow: 0 0 15px #ff0099;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
+.logo-text { font-size: 36px; font-weight: bold; color: #00ffc8; }
 
-.countdown {
-  font-size: 24px;
-  margin-top: 10px;
-  color: #fff;
-  font-weight: bold;
-}
+.main-button { padding: 12px 24px; background-color: #00ffc8; color: #0e0e2c; font-size: 18px; border: none; border-radius: 8px; cursor: pointer; margin-bottom: 10px; transition: background-color 0.3s ease; }
 
-.bottom-nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #1c1c1c;
-  padding: 12px 0;
-  border-top: 2px solid #444;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 100;
-}
+.main-button:hover { background-color: #0cd7a8; }
 
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #aaa;
-  text-decoration: none;
-  font-size: 14px;
-  transition: color 0.2s;
-}
+.countdown { font-size: 20px; margin-top: 10px; color: #ffffff; }
 
-.nav-item img {
-  width: 26px;
-  height: 26px;
-  margin-bottom: 5px;
-  filter: drop-shadow(0 0 3px #0ff);
-}
+.balance { margin-top: 10px; font-size: 18px; color: #0cd7a8; font-weight: bold; }
 
-.nav-item.active,
-.nav-item:hover {
-  color: #fff;
-}
+.bottom-nav { display: flex; justify-content: space-around; align-items: center; background-color: #1a1a40; padding: 10px 0; position: fixed; bottom: 0; left: 0; width: 100%; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5); z-index: 1000; }
 
-.spin-button {
-  margin-top: 20px;
-  background-color: #00ff99;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #000;
-  cursor: pointer;
-  box-shadow: 0 0 10px #00ff99;
-}
+.nav-item { display: flex; flex-direction: column; align-items: center; color: #ffffff; text-decoration: none; font-size: 12px; }
 
-.reward-box {
-  margin-top: 30px;
-  font-size: 20px;
-  color: #fff;
-}
+.nav-item img { width: 24px; height: 24px; margin-bottom: 4px; filter: drop-shadow(0 0 2px #00ffc8); }
 
-.token-button {
-  margin-top: 30px;
-  padding: 12px 24px;
-  border-radius: 10px;
-  background-color: #ffcc00;
-  color: #000;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 0 10px #ffcc00;
-  display: inline-block;
-}
+.nav-item.active span, .nav-item.active img { color: #00ffc8; filter: drop-shadow(0 0 4px #00ffc8); }
+
+.spin-wheel { width: 200px; height: 200px; border-radius: 50%; border: 10px solid #00ffc8; margin: 20px auto; position: relative; box-shadow: 0 0 20px #00ffc8; }
+
+.spin-result { font-size: 18px; color: #0cd7a8; font-weight: bold; margin-top: 10px; text-align: center; }
+
+.clan-section { margin-top: 20px; text-align: center; }
+
+.clan-avatar { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #00ffc8; margin: 10px auto; box-shadow: 0 0 10px #00ffc8; }
+
+button:disabled { background-color: #444; cursor: not-allowed; }
+
