@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join a Clan - CBANK</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="clan-container">
+    <h2>Join a Clan</h2>
+
+    <form id="clan-search-form">
+      <input type="text" id="clan-search-input" placeholder="Search for a clan..." required />
+      <button type="submit">Search</button>
+    </form>
+
+    <div id="clan-result" class="clan-result hidden">
+      <div class="clan-logo-circle">
+        <img src="icons/clan-default.png" alt="Clan Logo" />
+      </div>
+      <h3 id="clan-name">Blum Clan</h3>
+      <button class="main-button" id="join-clan">Join Clan</button>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <img src="icons/home.svg" alt="Home" />
+      <span>Home</span>
+    </a>
+    <a href="spin.html" class="nav-item">
+      <img src="icons/spin.svg" alt="Spin" />
+      <span>Spin</span>
+    </a>
+    <a href="earn.html" class="nav-item">
+      <img src="icons/earn.svg" alt="Earn" />
+      <span>Earn</span>
+    </a>
+    <a href="wallet.html" class="nav-item">
+      <img src="icons/wallet.svg" alt="Wallet" />
+      <span>Wallet</span>
+    </a>
+    <a href="clan.html" class="nav-item active">
+      <img src="icons/clan.svg" alt="Clan" />
+      <span>Clan</span>
+    </a>
+  </nav>
+
+  <script>
+    const form = document.getElementById("clan-search-form");
+    const result = document.getElementById("clan-result");
+    const clanNameEl = document.getElementById("clan-name");
+    const clanSearchInput = document.getElementById("clan-search-input");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const query = clanSearchInput.value.trim().toLowerCase();
+      if (query === "blum" || query === "blum clan") {
+        clanNameEl.textContent = "Blum Clan";
+        result.classList.remove("hidden");
+      } else {
+        clanNameEl.textContent = "No clan found.";
+        result.classList.remove("hidden");
+      }
+    });
+
+    document.getElementById("join-clan").addEventListener("click", function () {
+      alert("You have successfully joined the Blum Clan!");
+    });
+  </script>
+</body>
+</html>
