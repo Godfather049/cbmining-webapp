@@ -1,75 +1,66 @@
 // ================== KONFİQURASİYA ================== //
 const BOT_CONFIG = {
   username: "cbmining_bot",
-  token: "7336956953:AAE_jU8Qd2CNhe9hfSDTzG9zp17FXBFY0Ys",
   adminWallet: "UQB7Qq8821NNJJ5JGp4GbnV66sLWxEDFCtpUUYOaBbW2RpIL",
   tokenContract: "EQARYZBkWrdBMLFROALHaUHVm1ng7CnY2DH-9YirsL-nIzu2",
-  channel: "https://t.me/cbankmining",
   apiUrl: "https://cbank-mining.netlify.app/.netlify/functions",
-  tokenRate: 100,
+  miningRate: 100,
   miningDuration: 8
 };
 
-// ================== ƏSAS KOD ================== //
-let miningSession;
+// ================== GLOBAL DƏYİŞƏNLƏR ================== //
+let miningInterval;
 let tgWebApp;
 let userData = {
   id: null,
-  username: null,
+  username: "Guest",
   balance: 0,
-  referrals: 0
+  referrals: 0,
+  mining: false
 };
 
+// ================== İNİTİALİZASİYA ================== //
 document.addEventListener('DOMContentLoaded', async () => {
-  // Telegram WebApp init
-  if (window.Telegram && Telegram.WebApp) {
+  initTelegramWebApp();
+  loadUserData();
+  initUI();
+  checkOngoingMining();
+  removeDuplicateButtons(); // Təkrar düymələri sil
+  checkIcons(); // İkonları yoxla
+});
+
+// ================== TELEGRAM INTEGRASİYASI ================== //
+function initTelegramWebApp() {
+  if (window.Telegram?.WebApp) {
     tgWebApp = Telegram.WebApp;
     tgWebApp.expand();
     tgWebApp.enableClosingConfirmation();
-    await initTelegramUser();
+    
+    const tgUser = tgWebApp.initDataUnsafe.user;
+    if (tgUser) {
+      userData.id = tgUser.id;
+      userData.username = tgUser.username || `user_${tgUser.id}`;
+      
+      // Referral sistemini yoxla
+      const startParam = tgWebApp.initDataUnsafe.start_param;
+      if (startParam && startParam !== userData.id.toString()) {
+        handleReferral(startParam);
+      }
+    }
   } else {
-    console.warn('Telegram WebApp not detected, running in browser mode');
     initBrowserMode();
   }
-
-  initUI();
-  loadUserData();
-  checkOngoingMining();
-});
-
-// ================== İSTİFADƏÇİ İDARƏETMƏ ================== //
-async function initTelegramUser() {
-  const tgUser = tgWebApp.initDataUnsafe.user;
-  if (!tgUser) return;
-
-  userData = {
-    id: tgUser.id,
-    username: tgUser.username || `user_${tgUser.id}`,
-    balance: parseInt(localStorage.getItem('cbank_balance')) || 0,
-    referrals: parseInt(localStorage.getItem('cbank_referrals')) || 0
-  };
-
-  // Referral sistemini yoxla
-  const startParam = tgWebApp.initDataUnsafe.start_param;
-  if (startParam && startParam !== userData.id.toString()) {
-    await handleReferral(startParam);
-  }
-
-  // İstifadəçi məlumatlarını yadda saxla
-  localStorage.setItem('cbank_user_id', userData.id);
-  localStorage.setItem('cbank_username', userData.username);
 }
 
 // ================== MİNİNG SİSTEMİ ================== //
 function checkOngoingMining() {
   const savedSession = localStorage.getItem('cbank_mining_session');
   if (savedSession) {
-    miningSession = JSON.parse(savedSession);
-    const remaining = Math.max(0, miningSession.endTime - Date.now());
+    const session = JSON.parse(savedSession);
+    const remaining = session.endTime - Date.now();
     
     if (remaining > 0) {
-      startCountdown(remaining);
-      document.getElementById('start-mining').textContent = 'Mining...';
+      startMiningUI(session.endTime);
     } else {
       completeMining();
     }
@@ -77,70 +68,36 @@ function checkOngoingMining() {
 }
 
 function startMining() {
-  if (miningSession) return;
-  
+  if (userData.mining) return;
+
   const endTime = Date.now() + (BOT_CONFIG.miningDuration * 60 * 60 * 1000);
-  miningSession = {
+  userData.mining = true;
+  
+  localStorage.setItem('cbank_mining_session', JSON.stringify({
     startTime: Date.now(),
     endTime: endTime,
     completed: false
-  };
-  
-  localStorage.setItem('cbank_mining_session', JSON.stringify(miningSession));
-  startCountdown(BOT_CONFIG.miningDuration * 60 * 60 * 1000);
-  document.getElementById('start-mining').textContent = 'Mining...';
-  
-  // Backend-ə bildir
-  if (tgWebApp) {
-    tgWebApp.sendData(JSON.stringify({
-      action: 'start_mining',
-      userId: userData.id,
-      duration: BOT_CONFIG.miningDuration
-    }));
-  }
+  }));
+
+  startMiningUI(endTime);
+  showNotification("⛏️ Mining başladı! 8 saat sonra 100 CB qazanacaqsınız");
 }
 
 function completeMining() {
-  if (!miningSession || miningSession.completed) return;
-  
-  userData.balance += BOT_CONFIG.tokenRate;
-  miningSession.completed = true;
+  userData.balance += BOT_CONFIG.miningRate;
+  userData.mining = false;
   
   localStorage.setItem('cbank_balance', userData.balance);
-  localStorage.setItem('cbank_mining_session', JSON.stringify(miningSession));
+  localStorage.removeItem('cbank_mining_session');
   
-  updateBalance();
-  showNotification(`⛏️ Mining tamamlandı! +${BOT_CONFIG.tokenRate} CB əlavə edildi`);
-  document.getElementById('start-mining').textContent = 'Start Mining';
+  updateUI();
+  showNotification(`✅ Mining tamamlandı! +${BOT_CONFIG.miningRate} CB əlavə edildi`);
 }
 
-// ================== ÖDƏNİŞ SİSTEMİ ================== //
-function connectWallet() {
-  if (tgWebApp) {
-    tgWebApp.openInvoice({
-      currency: 'TON',
-      amount: 1000000000, // 1 TON in nanoTON
-      description: 'CBANK Mining Deposit',
-      payload: JSON.stringify({
-        userId: userData.id,
-        wallet: BOT_CONFIG.adminWallet,
-        tokenContract: BOT_CONFIG.tokenContract
-      })
-    });
-  } else {
-    window.open(`https://app.tonkeeper.com/transfer/${BOT_CONFIG.adminWallet}`, '_blank');
-  }
-}
-
-function buyTokens() {
-  const message = `💳 Token almaq üçün ${BOT_CONFIG.adminWallet} ünvanına TON göndərin\n\n` +
-                 `📝 Qeyd edin: ${userData.id}`;
-  
-  if (tgWebApp) {
-    tgWebApp.showAlert(message);
-  } else {
-    alert(message);
-  }
+function startMiningUI(endTime) {
+  userData.mining = true;
+  updateUI();
+  startCountdown(endTime - Date.now());
 }
 
 // ================== REFERRAL SİSTEMİ ================== //
@@ -151,20 +108,52 @@ async function handleReferral(referrerId) {
     const response = await fetch(`${BOT_CONFIG.apiUrl}/referral`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        userId: userData.id, 
-        referrerId: referrerId 
+      body: JSON.stringify({
+        userId: userData.id,
+        referrerId: referrerId
       })
     });
-    
+
     if (response.ok) {
-      const data = await response.json();
-      userData.referrals = data.referralCount || userData.referrals;
+      userData.referrals++;
+      userData.balance += 50;
       localStorage.setItem('cbank_referrals', userData.referrals);
-      updateReferralUI();
+      localStorage.setItem('cbank_balance', userData.balance);
+      updateUI();
     }
   } catch (error) {
-    console.error('Referral error:', error);
+    console.error("Referral error:", error);
+  }
+}
+
+async function generateReferralLink() {
+  try {
+    const response = await fetch(`${BOT_CONFIG.apiUrl}/referral-link?userId=${userData.id || 0}`);
+    if (response.ok) {
+      const data = await response.json();
+      return data.link || `https://t.me/${BOT_CONFIG.username}?start=ref${userData.id || 0}`;
+    }
+  } catch (error) {
+    console.warn("Referral link error:", error);
+  }
+  return `https://t.me/${BOT_CONFIG.username}?start=ref${userData.id || 0}`;
+}
+
+// ================== WALLET & TOKEN SİSTEMİ ================== //
+function connectWallet() {
+  if (tgWebApp) {
+    tgWebApp.openInvoice({
+      currency: 'TON',
+      amount: 1000000000,
+      description: 'CBANK Token Purchase',
+      payload: JSON.stringify({
+        userId: userData.id,
+        wallet: BOT_CONFIG.adminWallet,
+        tokenContract: BOT_CONFIG.tokenContract
+      })
+    });
+  } else {
+    window.open(`ton://transfer/${BOT_CONFIG.adminWallet}`, '_blank');
   }
 }
 
@@ -174,6 +163,7 @@ function initUI() {
   const miningBtn = document.getElementById('start-mining');
   if (miningBtn) {
     miningBtn.addEventListener('click', startMining);
+    miningBtn.disabled = userData.mining;
   }
 
   // Wallet button
@@ -182,47 +172,107 @@ function initUI() {
     walletBtn.addEventListener('click', connectWallet);
   }
 
-  // Buy Tokens button
-  const buyBtn = document.getElementById('buy-tokens');
-  if (buyBtn) {
-    buyBtn.addEventListener('click', buyTokens);
+  // Referral copy button
+  const copyBtn = document.getElementById('copy-referral');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', copyReferralLink);
   }
 
-  // Clan button text fix
-  const clanBtn = document.querySelector('[href="clan.html"]');
-  if (clanBtn) {
-    clanBtn.querySelector('span').textContent = 'Clana Qoşul';
-  }
-
-  // Update referral link
-  updateReferralLink();
+  updateUI();
 }
 
-function updateReferralLink() {
+function updateUI() {
+  // Balans
+  const balanceEl = document.getElementById('balance');
+  if (balanceEl) balanceEl.textContent = `CB: ${userData.balance}`;
+
+  // Referral
+  updateReferralUI();
+
+  // Mining button
+  const miningBtn = document.getElementById('start-mining');
+  if (miningBtn) {
+    miningBtn.textContent = userData.mining ? "Mining..." : "Start Mining";
+    miningBtn.disabled = userData.mining;
+  }
+}
+
+async function updateReferralUI() {
   const referralEl = document.getElementById('referral-link');
   if (referralEl) {
-    referralEl.value = `https://t.me/${BOT_CONFIG.username}?start=${userData.id}`;
+    referralEl.value = await generateReferralLink();
   }
-}
 
-function updateBalance() {
-  const balanceElement = document.getElementById('balance');
-  if (balanceElement) {
-    balanceElement.textContent = `CB: ${userData.balance}`;
-  }
-}
-
-function updateReferralUI() {
   const referralCountEl = document.getElementById('referral-count');
   if (referralCountEl) {
     referralCountEl.textContent = `Referrallar: ${userData.referrals}`;
   }
 }
 
+// ================== İKON PROBLEMLƏRİ ÜÇÜN ================== //
+function checkIcons() {
+  const navIcons = document.querySelectorAll('.nav-icon');
+  if (navIcons.length === 0) {
+    loadFallbackIcons();
+    return;
+  }
+
+  // SVG yüklənməyibsə, fallback emoji istifadə et
+  navIcons.forEach(icon => {
+    if (!icon.clientWidth) {
+      const parent = icon.closest('.nav-item');
+      if (parent) {
+        const span = parent.querySelector('span');
+        if (span) {
+          const emoji = getFallbackEmoji(span.textContent);
+          parent.innerHTML = `${emoji}<span>${span.textContent}</span>`;
+        }
+      }
+    }
+  });
+}
+
+function getFallbackEmoji(text) {
+  const emojiMap = {
+    'Home': '🏠',
+    'Earn': '💰',
+    'Wallet': '💳',
+    'Clan': '👥',
+    'Referral': '👥'
+  };
+  return emojiMap[text] || '🔘';
+}
+
+function loadFallbackIcons() {
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(item => {
+    const span = item.querySelector('span');
+    if (span) {
+      const emoji = getFallbackEmoji(span.textContent);
+      item.innerHTML = `${emoji}<span>${span.textContent}</span>`;
+    }
+  });
+}
+
+// ================== TƏKRAR DÜYMƏLƏR ÜÇÜN ================== //
+function removeDuplicateButtons() {
+  const buttons = document.querySelectorAll('button');
+  const uniqueButtons = new Set();
+
+  buttons.forEach(button => {
+    const buttonText = button.textContent.trim();
+    if (uniqueButtons.has(buttonText)) {
+      button.remove();
+    } else {
+      uniqueButtons.add(buttonText);
+    }
+  });
+}
+
 // ================== KÖMƏKÇİ FUNKSİYALAR ================== //
 function startCountdown(durationMs) {
-  const timerElement = document.getElementById('countdown');
-  if (!timerElement) return;
+  const timerEl = document.getElementById('countdown');
+  if (!timerEl) return;
 
   let remaining = durationMs;
   
@@ -232,48 +282,52 @@ function startCountdown(durationMs) {
     if (remaining <= 0) {
       clearInterval(interval);
       completeMining();
-      timerElement.textContent = '00:00:00';
+      timerEl.textContent = "00:00:00";
       return;
     }
     
-    const hours = Math.floor(remaining / (1000 * 60 * 60));
-    const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+    const hours = Math.floor(remaining / (3600 * 1000));
+    const mins = Math.floor((remaining % (3600 * 1000)) / (60 * 1000));
+    const secs = Math.floor((remaining % (60 * 1000)) / 1000);
     
-    timerElement.textContent = 
-      `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    timerEl.textContent = 
+      `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }, 1000);
 }
 
 function showNotification(message) {
-  if (tgWebApp) {
+  if (tgWebApp?.showAlert) {
     tgWebApp.showAlert(message);
   } else {
     alert(message);
   }
 }
 
+function copyReferralLink() {
+  const referralInput = document.getElementById('referral-link');
+  if (!referralInput) return;
+
+  referralInput.select();
+  document.execCommand('copy');
+  showNotification("Referral linki kopyalandı!");
+}
+
 function loadUserData() {
   userData.balance = parseInt(localStorage.getItem('cbank_balance')) || 0;
   userData.referrals = parseInt(localStorage.getItem('cbank_referrals')) || 0;
-  
-  updateBalance();
-  updateReferralUI();
+  userData.mining = localStorage.getItem('cbank_mining_session') !== null;
 }
 
-// ================== BROWSER MODE ================== //
 function initBrowserMode() {
-  console.log('Browser modunda işləyir');
   userData = {
     id: Math.floor(Math.random() * 1000000),
-    username: 'demo_user',
-    balance: parseInt(localStorage.getItem('cbank_balance')) || 0,
-    referrals: parseInt(localStorage.getItem('cbank_referrals')) || 0
+    username: "demo_user",
+    balance: parseInt(localStorage.getItem('cbank_balance')) || 500,
+    referrals: parseInt(localStorage.getItem('cbank_referrals')) || 0,
+    mining: false
   };
   
-  // Demo məlumatlar
   if (!localStorage.getItem('cbank_balance')) {
     localStorage.setItem('cbank_balance', '500');
-    userData.balance = 500;
   }
-    }
+}
